@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScreenTest</title>
+    <style>
+        html, body {
+            margin: 0;
+            position: relative;
+            height: 100%;
+        }
+        .content {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="content"></div>
+    <script>
+        const testColors = [
+            "black",
+            "red",
+            "green",
+            "blue",
+            "white",
+            "#015c84",
+        ];
+        
+        let currentTestColorIndex = 0;
+
+        function getCurrentTestColor () {
+            let color = testColors[currentTestColorIndex];
+            currentTestColorIndex = currentTestColorIndex < testColors.length - 1
+                ? currentTestColorIndex + 1
+                : 0;
+            return color;
+        }
+
+        function doTest () {
+            document.querySelector(".content").style.backgroundColor = getCurrentTestColor();
+        }
+
+        window.addEventListener("DOMContentLoaded", (event) => {
+            doTest();
+            document.body.addEventListener("click", (event) => {
+                if (!document.fullscreenElement) {
+                    document.body.requestFullscreen();
+                } else {
+                    document.exitFullscreen();
+                }
+            });
+            window.addEventListener("keydown", (event) => {
+                switch (event.code) {
+                    case "Space":
+                        doTest();
+                        break;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
